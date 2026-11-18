@@ -74,8 +74,6 @@ public class MySQLCompanyDAO implements CompanyDAO {
 		try {
 			return db.executeUpdate() > 0;
 		} catch (ModelException e) {
-			// Empresa referenciada por alguma vaga (jobs.company_id): 
-			// devolve false e o controller mostra a mensagem amigável
 			if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
 				return false;
 			}
@@ -90,7 +88,6 @@ public class MySQLCompanyDAO implements CompanyDAO {
 		
 		List<Company> companies = new ArrayList<Company>();
 			
-		// Declara uma instrução SQL
 		String sqlQuery = " SELECT c.id as 'company_id', c.*, u.* \n"
 				+ " FROM companies c \n"
 				+ " INNER JOIN users u \n"
@@ -146,7 +143,6 @@ public class MySQLCompanyDAO implements CompanyDAO {
 		return total;
 	}
 	
-	// Monta Company + User a partir de uma linha do JOIN companies x users
 	private Company createCompanyWithUser(DBHandler db) throws ModelException {
 		User user = new User(db.getInt("user_id"));
 		user.setName(db.getString("nome"));

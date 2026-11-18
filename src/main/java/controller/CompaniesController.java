@@ -45,7 +45,6 @@ public class CompaniesController extends HttpServlet{
 			try {
 				company = dao.findById(idCompany);
 			} catch (ModelException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -69,12 +68,10 @@ public class CompaniesController extends HttpServlet{
 		
 		List<Company> companies = null;
 		try {
-			// conta o total, calcula a página atual e busca só os registros dela
 			Pagination pagination = ControllerUtil.createPagination(req, dao.countAll());
 			
 			companies = dao.listPage(pagination.getCurrentPage(), pagination.getPageSize());
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 		
@@ -127,7 +124,6 @@ public class CompaniesController extends HttpServlet{
 		company.setEnd(ControllerUtil.formatDate(end));
 		company.setUser(new User(userId));
 		
-		
 		CompanyDAO dao = DAOFactory.createDAO(CompanyDAO.class);
 		
 		try {
@@ -140,7 +136,6 @@ public class CompaniesController extends HttpServlet{
 						company.getName() + "' não pode ser atualizada.");
 			}				
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}		
@@ -169,7 +164,6 @@ public class CompaniesController extends HttpServlet{
 								+ "Há dados relacionados à empresa.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			if (e.getCause() instanceof 
 					SQLIntegrityConstraintViolationException) {
 				ControllerUtil.errorMessage(req, e.getMessage());
@@ -205,7 +199,6 @@ public class CompaniesController extends HttpServlet{
 				+ "' não pode ser salva.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}

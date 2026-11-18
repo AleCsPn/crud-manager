@@ -36,7 +36,6 @@ public class MySQLUserDAO implements UserDAO {
 				         	+ "email = ? "
 				         + "WHERE id = ?";
 		
-		
 		db.prepareStatement(sqlUpdate);
 		
 		db.setString(1, user.getName());
@@ -78,7 +77,6 @@ public class MySQLUserDAO implements UserDAO {
 		
 		List<User> users = new ArrayList<User>();
 			
-		// Declara um instrução SQL
 		String sqlQuery = "SELECT * FROM users";
 		
 		db.createStatement();
@@ -120,8 +118,6 @@ public class MySQLUserDAO implements UserDAO {
 		
 		List<User> users = new ArrayList<User>();
 		
-		// ORDER BY com desempate por id: sem ordem estável, a paginação 
-		// poderia repetir ou "perder" registros entre uma página e outra
 		String sqlQuery = "SELECT * FROM users ORDER BY nome, id LIMIT ? OFFSET ?";
 		
 		db.prepareStatement(sqlQuery);

@@ -1,9 +1,5 @@
 package model;
 
-/**
- * Conta de acesso ao sistema (usada no Login).
- * Não confundir com User, que é um cadastro do CRUD de usuários.
- */
 public class Account {
 	private int id;
 	private String name;

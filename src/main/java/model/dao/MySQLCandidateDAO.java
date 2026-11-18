@@ -11,8 +11,6 @@ import model.ModelException;
 
 public class MySQLCandidateDAO implements CandidateDAO {
 
-	// JOIN candidates -> jobs -> companies: uma única consulta traz o 
-	// candidato, o título da vaga desejada e o nome da empresa dessa vaga
 	private static final String SELECT_CANDIDATES = 
 			" SELECT ca.id AS candidate_id, ca.full_name, ca.salary_expectation, "
 		  + "        ca.birth_date, ca.experience_level, "
@@ -141,7 +139,6 @@ public class MySQLCandidateDAO implements CandidateDAO {
 		return candidate;
 	}
 
-	// Monta Candidate + Job (só id, título e empresa) a partir do JOIN
 	private Candidate createCandidate(DBHandler db) throws ModelException {
 		Company company = new Company(db.getInt("company_id"));
 		company.setName(db.getString("company_name"));
@@ -154,7 +151,6 @@ public class MySQLCandidateDAO implements CandidateDAO {
 		candidate.setFullName(db.getString("full_name"));
 		candidate.setSalaryExpectation(db.getBigDecimal("salary_expectation"));
 		candidate.setBirthDate(db.getDate("birth_date"));
-		// o ENUM do banco ('JUNIOR','PLENO','SENIOR') vira o enum Java
 		candidate.setExperienceLevel(ExperienceLevel.valueOf(db.getString("experience_level")));
 		candidate.setDesiredJob(job);
 

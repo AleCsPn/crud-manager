@@ -24,7 +24,6 @@ public class JobsController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	// A coluna é DECIMAL(10,2): o maior valor possível é 99.999.999,99
 	private static final BigDecimal MAX_SALARY = new BigDecimal("99999999.99");
 
 	@Override
@@ -94,12 +93,10 @@ public class JobsController extends HttpServlet {
 
 		List<Job> jobs = null;
 		try {
-			// conta o total, calcula a página atual e busca só os registros dela
 			Pagination pagination = ControllerUtil.createPagination(req, dao.countAll());
 
 			jobs = dao.listPage(pagination.getCurrentPage(), pagination.getPageSize());
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 
@@ -121,7 +118,6 @@ public class JobsController extends HttpServlet {
 		} catch (NumberFormatException e) {
 			ControllerUtil.errorMessage(req, "Vaga inválida.");
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -129,19 +125,12 @@ public class JobsController extends HttpServlet {
 		return null;
 	}
 
-	/**
-	 * Lê os campos do formulário, valida e preenche o objeto Job.
-	 * Devolve null se está tudo certo, ou o texto do erro a ser mostrado.
-	 * (Os atributos "required" do HTML podem ser burlados, por isso a 
-	 * validação também é feita aqui no servidor.)
-	 */
 	private String fillJob(HttpServletRequest req, Job job) throws ModelException {
 		String title = req.getParameter("title");
 		String salaryStr = req.getParameter("salary");
 		String closingDateStr = req.getParameter("closingDate");
 		String companyStr = req.getParameter("company");
 
-		// Checkbox: se estiver desmarcado, o navegador NÃO envia o parâmetro
 		boolean remote = req.getParameter("remote") != null;
 
 		if (title == null || title.trim().isEmpty())
@@ -174,7 +163,6 @@ public class JobsController extends HttpServlet {
 			return "Selecione a empresa contratante.";
 		}
 
-		// Confere se a empresa realmente existe (o valor do <select> pode ser adulterado)
 		CompanyDAO companyDAO = DAOFactory.createDAO(CompanyDAO.class);
 		Company company = companyDAO.findById(companyId);
 		if (company == null)
@@ -209,7 +197,6 @@ public class JobsController extends HttpServlet {
 						+ "' não pode ser salva.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -243,7 +230,6 @@ public class JobsController extends HttpServlet {
 						+ "' não pode ser atualizada.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -270,7 +256,6 @@ public class JobsController extends HttpServlet {
 		} catch (NumberFormatException e) {
 			ControllerUtil.errorMessage(req, "Vaga inválida.");
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}

@@ -59,16 +59,6 @@ INSERT INTO posts VALUES
 (DEFAULT, "Olá da Rosânia 2", CURDATE(), 5),
 (DEFAULT, "Olá da Rosânia 3", CURDATE(), 5);
 
--- =====================================================================
--- ATIVIDADE 3: Gestão de RH (Recrutamento e Vagas) + Login
--- ---------------------------------------------------------------------
--- Tudo abaixo é NOVO. Se você já tem o banco do projeto base com dados e 
--- não quer apagá-los, rode apenas esta parte (a partir daqui) com o 
--- banco crud_manager selecionado:  USE crud_manager;
--- =====================================================================
-
--- Contas de acesso ao sistema (Login).
--- A senha NUNCA é guardada em texto puro: guardamos o hash PBKDF2 com salt.
 CREATE TABLE IF NOT EXISTS accounts (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -76,7 +66,6 @@ CREATE TABLE IF NOT EXISTS accounts (
     password_hash VARCHAR(255) NOT NULL
 );
 
--- CRUD 1: Vagas de emprego. Cada vaga pertence a uma empresa (companies).
 CREATE TABLE IF NOT EXISTS jobs (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
@@ -88,7 +77,6 @@ CREATE TABLE IF NOT EXISTS jobs (
     REFERENCES companies(id)
 );
 
--- CRUD 2: Candidatos. Cada candidato está vinculado a uma vaga (jobs).
 CREATE TABLE IF NOT EXISTS candidates (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(150) NOT NULL,
@@ -100,21 +88,14 @@ CREATE TABLE IF NOT EXISTS candidates (
     REFERENCES jobs(id)
 );
 
--- ---------------------------------------------------------------------
--- DADOS DE EXEMPLO
--- ---------------------------------------------------------------------
-
--- Login de demonstração:  admin@mail.com  /  senha: admin123
 INSERT INTO accounts VALUES
 (DEFAULT, "Administrador", "admin@mail.com", "pbkdf2_sha256$120000$Uxm6fRSZAKHu1EAMQWn3GA==$vc/jcd4VPLq6wBCfEHUo1YE6d1T8dkFx10Ot4ntlQX0=");
 
--- Mais usuários (para a tela de usuários ter mais de uma página)
 INSERT INTO users VALUES
 (DEFAULT, "Marina Souza", "F", "marina@mail.com"),
 (DEFAULT, "Carlos Pereira", "M", "carlos@mail.com"),
 (DEFAULT, "Fernanda Lima", "F", "fernanda@mail.com");
 
--- Empresas (o projeto base não trazia nenhuma; as vagas dependem delas)
 INSERT INTO companies VALUES
 (DEFAULT, "TechNova Soluções", "Analista de Sistemas", "2019-03-01", NULL, 1),
 (DEFAULT, "Banco Horizonte", "Gerente de Contas", "2018-06-15", "2022-01-31", 2),

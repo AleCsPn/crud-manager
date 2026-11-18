@@ -1,10 +1,8 @@
 <jsp:directive.page contentType="text/html; charset=UTF-8" />
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%-- Fixa o locale: sem ele, o fmt:formatDate ignora o pattern quando o navegador não envia Accept-Language --%>
 <fmt:setLocale value="pt_BR" />
 
-<%-- "today" é usado para impedir (no HTML) uma data de nascimento no futuro --%>
 <jsp:useBean id="today" class="java.util.Date" />
 
 <!DOCTYPE html>
@@ -19,13 +17,11 @@
 	<div id="container" class="container-fluid">
 		<h3 class="page-header">${not empty candidate ? 'Atualizar' : 'Adicionar'} Candidato</h3>
 		
-		<%-- action = "insert" ou "update" (definido pelo CandidatesController) --%>
 		<form action="${pageContext.request.contextPath}/candidate/${action}" method="POST">
 			
 			<input type="hidden" value="${candidate.id}" name="candidateId">
 			
 			<div class="row">
-				<%-- 1) input type="text" --%>
 				<div class="form-group col-md-6">
 					<label for="fullName">Nome completo</label>
 					<input type="text" class="form-control" id="fullName" name="fullName" 
@@ -36,7 +32,6 @@
 						   value="<c:out value='${candidate.fullName}' />" />
 				</div>
 				
-				<%-- 2) input type="number" --%>
 				<div class="form-group col-md-3">
 					<label for="salaryExpectation">Pretensão salarial (R$)</label>
 					<input type="number" class="form-control" id="salaryExpectation" name="salaryExpectation" 
@@ -46,7 +41,6 @@
 						   value="${candidate.salaryExpectation}" />
 				</div>
 				
-				<%-- 3) input type="date" --%>
 				<div class="form-group col-md-3">
 					<label for="birthDate">Data de nascimento</label>
 					<input type="date" class="form-control" id="birthDate" name="birthDate" 
@@ -58,7 +52,6 @@
 			</div>
 			
 			<div class="row">
-				<%-- 4) input type="radio" (uma opção para cada constante do enum ExperienceLevel) --%>
 				<div class="form-group col-md-5">
 					<label>Nível de experiência</label>
 					<div>
@@ -72,7 +65,6 @@
 					</div>
 				</div>
 				
-				<%-- 5) select: chave estrangeira para Job (lista vinda do banco) --%>
 				<div class="form-group col-md-7">
 					<label for="job">Vaga desejada</label>
 					<select id="job" class="form-control" name="job" required 

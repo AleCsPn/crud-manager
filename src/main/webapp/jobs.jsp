@@ -93,13 +93,10 @@
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			// fecha o alert após 3 segundos
 			setTimeout(function() {
 				$("#alert").slideUp(500);
 			}, 3000);
 			
-			// ao clicar no excluir de alguma vaga, pega o título e o id da vaga 
-			// e a ação (delete) e envia para o modal 
 			$(".modal-remove").click(function () {
 				var jobTitle = $(this).attr('job-title');
 				var jobId = $(this).attr('job-id');

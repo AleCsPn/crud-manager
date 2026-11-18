@@ -1,16 +1,5 @@
 <jsp:directive.page contentType="text/html; charset=UTF-8" />
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%--
-	A diretiva acima é necessária: arquivos incluídos com <%@include%> têm a
-	codificação lida individualmente (o padrão seria ISO-8859-1 e os acentos quebrariam).
-	
-	Barra de paginação reutilizada por todas as listagens (<%@include%>).
-	
-	Antes de incluir, a página define a URL base da listagem:
-		<c:set var="paginationUrl" value="${pageContext.request.contextPath}/jobs" />
-	
-	O controller disponibiliza o atributo "pagination" (classe util.Pagination).
---%>
 <c:if test="${not empty pagination}">
 	<div id="bottom" class="row">
 		<div class="col-md-12">
@@ -38,7 +27,7 @@
 						<li class="next"><a href="${paginationUrl}?page=${pagination.nextPage}" rel="next">Próximo &gt;</a></li>
 					</c:otherwise>
 				</c:choose>
-			</ul><!-- /.pagination -->
+			</ul>
 			
 			<p class="text-muted">
 				Exibindo ${pagination.firstItem} a ${pagination.lastItem} 

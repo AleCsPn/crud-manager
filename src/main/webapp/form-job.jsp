@@ -1,7 +1,6 @@
 <jsp:directive.page contentType="text/html; charset=UTF-8" />
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%-- Fixa o locale: sem ele, o fmt:formatDate ignora o pattern quando o navegador não envia Accept-Language --%>
 <fmt:setLocale value="pt_BR" />
 
 <!DOCTYPE html>
@@ -16,13 +15,11 @@
 	<div id="container" class="container-fluid">
 		<h3 class="page-header">${not empty job ? 'Atualizar' : 'Adicionar'} Vaga</h3>
 		
-		<%-- action = "insert" ou "update" (definido pelo JobsController) --%>
 		<form action="${pageContext.request.contextPath}/job/${action}" method="POST">
 			
 			<input type="hidden" value="${job.id}" name="jobId">
 			
 			<div class="row">
-				<%-- 1) input type="text" --%>
 				<div class="form-group col-md-6">
 					<label for="title">Título da vaga</label>
 					<input type="text" class="form-control" id="title" name="title" 
@@ -33,7 +30,6 @@
 						   value="<c:out value='${job.title}' />" />
 				</div>
 				
-				<%-- 2) input type="number" --%>
 				<div class="form-group col-md-3">
 					<label for="salary">Salário oferecido (R$)</label>
 					<input type="number" class="form-control" id="salary" name="salary" 
@@ -43,7 +39,6 @@
 						   value="${job.salary}" />
 				</div>
 				
-				<%-- 3) input type="date" --%>
 				<div class="form-group col-md-3">
 					<label for="closingDate">Encerramento das inscrições</label>
 					<input type="date" class="form-control" id="closingDate" name="closingDate" 
@@ -55,7 +50,6 @@
 			</div>
 			
 			<div class="row">
-				<%-- 4) input type="checkbox" --%>
 				<div class="form-group col-md-4">
 					<label>Modalidade</label>
 					<div class="checkbox">
@@ -67,7 +61,6 @@
 					</div>
 				</div>
 				
-				<%-- 5) select: chave estrangeira para Company (lista vinda do banco) --%>
 				<div class="form-group col-md-8">
 					<label for="company">Empresa contratante</label>
 					<select id="company" class="form-control" name="company" required 

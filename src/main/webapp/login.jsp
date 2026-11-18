@@ -7,7 +7,6 @@
 	<title>CRUD Manager - Login</title>
 </head>
 <body>
-	<%-- Sem o menu de navegação: a tela de login é pública --%>
 	<div class="container">
 		<div class="login-card panel panel-default">
 			<div class="panel-heading text-center">

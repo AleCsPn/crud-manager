@@ -8,22 +8,6 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-/**
- * Geração e verificação de hash de senhas usando PBKDF2 (HMAC-SHA256),
- * que já vem no JDK (não precisa de biblioteca externa).
- * 
- * Nunca guardamos a senha em texto puro no banco. Guardamos uma String no 
- * formato:  pbkdf2_sha256$ITERAÇÕES$SALT(base64)$HASH(base64)
- * 
- * - SALT: bytes aleatórios, diferentes para cada senha. Garante que duas 
- *   pessoas com a mesma senha tenham hashes diferentes e inutiliza tabelas 
- *   pré-calculadas (rainbow tables).
- * - ITERAÇÕES: o algoritmo é repetido muitas vezes de propósito, para tornar 
- *   lento um ataque de força bruta.
- * 
- * Para gerar o hash de uma senha (ex.: para inserir outro usuário no banco):
- *     java -cp WEB-INF/classes util.PasswordUtil minhaSenha
- */
 public class PasswordUtil {
 
 	private static final String ALGORITHM = "PBKDF2WithHmacSHA256";
@@ -35,7 +19,6 @@ public class PasswordUtil {
 	private PasswordUtil() {
 	}
 
-	// Gera o hash (com salt novo) para guardar no banco
 	public static String hash(String password) {
 		byte[] salt = new byte[SALT_BYTES];
 		new SecureRandom().nextBytes(salt);
@@ -47,7 +30,6 @@ public class PasswordUtil {
 				+ Base64.getEncoder().encodeToString(hash);
 	}
 
-	// Confere se a senha digitada corresponde ao hash guardado no banco
 	public static boolean verify(String password, String stored) {
 		if (password == null || stored == null)
 			return false;
@@ -63,10 +45,8 @@ public class PasswordUtil {
 
 			byte[] actual = pbkdf2(password.toCharArray(), salt, iterations, expected.length * 8);
 
-			// Comparação em tempo constante (não "vaza" em qual byte divergiu)
 			return MessageDigest.isEqual(expected, actual);
 		} catch (IllegalArgumentException e) {
-			// hash armazenado em formato inválido
 			return false;
 		}
 	}
@@ -80,7 +60,6 @@ public class PasswordUtil {
 		}
 	}
 
-	// Utilitário de linha de comando para gerar hashes
 	public static void main(String[] args) {
 		if (args.length != 1) {
 			System.out.println("Uso: java util.PasswordUtil <senha>");

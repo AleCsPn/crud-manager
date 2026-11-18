@@ -144,8 +144,6 @@ public class DBHandler {
 		try {
 			boolean hasNext = resultSet.next();
 			
-			// Acabaram as linhas: libera Statement, ResultSet e Connection.
-			// (no projeto original as consultas nunca fechavam a conexão)
 			if (!hasNext)
 				close();
 			
@@ -201,8 +199,6 @@ public class DBHandler {
 		}
 	}
 	
-	// Agora público: os DAOs chamam quando leem só um registro (findById, COUNT)
-	// e não percorrem o ResultSet até o fim. Pode ser chamado mais de uma vez.
 	public void close() throws ModelException {
 		try {
 			if (preparedStatement != null)

@@ -52,12 +52,6 @@ public class ControllerUtil {
 		}
 	}
 
-	/**
-	 * Cria o objeto Pagination a partir do parâmetro "page" da URL e do total 
-	 * de registros, e já o disponibiliza para a JSP no atributo "pagination".
-	 * Quem chama usa pagination.getCurrentPage() e getPageSize() para pedir ao 
-	 * DAO somente os registros da página atual.
-	 */
 	static Pagination createPagination(HttpServletRequest req, int totalItems) {
 		int requestedPage = Pagination.parsePage(req.getParameter("page"));
 
@@ -71,12 +65,10 @@ public class ControllerUtil {
 
 	public static Date formatDate(String stringDate) {
 
-		// parâmetro ausente ou vazio (ex.: campo de data opcional em branco)
 		if (stringDate == null || stringDate.trim().isEmpty())
 			return null;
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		// não aceita datas inexistentes como 2026-02-31
 		dateFormat.setLenient(false);
 
 		try {

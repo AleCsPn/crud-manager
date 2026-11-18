@@ -10,9 +10,6 @@ import model.ModelException;
 
 public class MySQLJobDAO implements JobDAO {
 
-	// SELECT base reutilizado por listAll, listPage e findById.
-	// O JOIN com companies traz o nome da empresa na mesma consulta
-	// (evita fazer uma consulta extra para cada vaga listada).
 	private static final String SELECT_JOBS = 
 			" SELECT j.id AS job_id, j.title, j.salary, j.closing_date, j.remote, "
 		  + "        c.id AS company_id, c.name AS company_name "
@@ -74,8 +71,6 @@ public class MySQLJobDAO implements JobDAO {
 		try {
 			return db.executeUpdate() > 0;
 		} catch (ModelException e) {
-			// Vaga com candidatos (candidates.job_id) não pode ser excluída:
-			// devolve false e o controller mostra a mensagem amigável
 			if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
 				return false;
 			}
@@ -106,8 +101,6 @@ public class MySQLJobDAO implements JobDAO {
 
 		List<Job> jobs = new ArrayList<Job>();
 
-		// LIMIT = quantos registros trazer; OFFSET = quantos pular
-		// Página 1 -> OFFSET 0, página 2 -> OFFSET pageSize, e assim por diante
 		db.prepareStatement(SELECT_JOBS + " ORDER BY j.title, j.id LIMIT ? OFFSET ?");
 		db.setInt(1, pageSize);
 		db.setInt(2, (Math.max(page, 1) - 1) * pageSize);
@@ -150,7 +143,6 @@ public class MySQLJobDAO implements JobDAO {
 		return job;
 	}
 
-	// Monta Job + Company a partir de uma linha do JOIN jobs x companies
 	private Job createJob(DBHandler db) throws ModelException {
 		Company company = new Company(db.getInt("company_id"));
 		company.setName(db.getString("company_name"));

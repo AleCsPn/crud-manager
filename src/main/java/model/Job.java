@@ -3,9 +3,6 @@ package model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * Vaga de emprego. Cada vaga pertence a uma empresa contratante (Company).
- */
 public class Job {
 	private int id;
 	private String title;
@@ -52,7 +49,6 @@ public class Job {
 		this.closingDate = closingDate;
 	}
 
-	// Para boolean o getter é "isXxx": no EL fica ${job.remote}
 	public boolean isRemote() {
 		return remote;
 	}

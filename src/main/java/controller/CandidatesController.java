@@ -26,7 +26,6 @@ public class CandidatesController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	// A coluna é DECIMAL(10,2): o maior valor possível é 99.999.999,99
 	private static final BigDecimal MAX_SALARY = new BigDecimal("99999999.99");
 
 	@Override
@@ -91,8 +90,6 @@ public class CandidatesController extends HttpServlet {
 		ControllerUtil.redirect(resp, req.getContextPath() + "/candidates");
 	}
 
-	// Dados que o formulário precisa: as vagas (para o <select>) e os 
-	// níveis de experiência (para os inputs radio)
 	private void loadFormData(HttpServletRequest req) {
 		CommonsController.listJobs(req);
 		req.setAttribute("levels", ExperienceLevel.values());
@@ -103,12 +100,10 @@ public class CandidatesController extends HttpServlet {
 
 		List<Candidate> candidates = null;
 		try {
-			// conta o total, calcula a página atual e busca só os registros dela
 			Pagination pagination = ControllerUtil.createPagination(req, dao.countAll());
 
 			candidates = dao.listPage(pagination.getCurrentPage(), pagination.getPageSize());
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 
@@ -130,7 +125,6 @@ public class CandidatesController extends HttpServlet {
 		} catch (NumberFormatException e) {
 			ControllerUtil.errorMessage(req, "Candidato inválido.");
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -138,10 +132,6 @@ public class CandidatesController extends HttpServlet {
 		return null;
 	}
 
-	/**
-	 * Lê os campos do formulário, valida e preenche o objeto Candidate.
-	 * Devolve null se está tudo certo, ou o texto do erro a ser mostrado.
-	 */
 	private String fillCandidate(HttpServletRequest req, Candidate candidate) 
 			throws ModelException {
 
@@ -177,7 +167,6 @@ public class CandidatesController extends HttpServlet {
 		if (birthDate.after(new Date()))
 			return "A data de nascimento não pode ser no futuro.";
 
-		// Radio: se nenhuma opção for marcada o parâmetro nem chega (null)
 		ExperienceLevel level;
 		try {
 			level = ExperienceLevel.valueOf(levelStr);
@@ -192,7 +181,6 @@ public class CandidatesController extends HttpServlet {
 			return "Selecione a vaga desejada.";
 		}
 
-		// Confere se a vaga realmente existe (o valor do <select> pode ser adulterado)
 		JobDAO jobDAO = DAOFactory.createDAO(JobDAO.class);
 		Job job = jobDAO.findById(jobId);
 		if (job == null)
@@ -227,7 +215,6 @@ public class CandidatesController extends HttpServlet {
 						+ "' não pode ser salvo.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -261,7 +248,6 @@ public class CandidatesController extends HttpServlet {
 						+ "' não pode ser atualizado.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -288,7 +274,6 @@ public class CandidatesController extends HttpServlet {
 		} catch (NumberFormatException e) {
 			ControllerUtil.errorMessage(req, "Candidato inválido.");
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}

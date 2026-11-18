@@ -17,12 +17,9 @@ import model.dao.PostDAO;
 import util.Pagination;
 
 @SuppressWarnings("serial")
-// Herda da classe HttpServlet (extends HttpServlet) para ser tratada como um Servlet
-// Anota a classe (@WebServlet) ajustando as URLs (urlPatterns) as quais ela responde
 @WebServlet(urlPatterns = {"", "/posts", "/post/form", "/post/delete", "/post/insert", "/post/update"})
 public class PostsController extends HttpServlet {
 	
-	// Sobrescreve o método doGet, sendo capaz de responder métodos HTTP GET
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getRequestURI();
@@ -51,7 +48,6 @@ public class PostsController extends HttpServlet {
 		}
 	}
 	
-	// Sobrescreve o método doPost, sendo capaz de responder métodos HTTP POST
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getRequestURI();
@@ -95,7 +91,6 @@ public class PostsController extends HttpServlet {
 			
 			return p;
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -121,7 +116,6 @@ public class PostsController extends HttpServlet {
 				ControllerUtil.errorMessage(req, "Post '" + post.getContent() + "' não pode ser atualizado.");
 			}				
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -147,7 +141,6 @@ public class PostsController extends HttpServlet {
 			}
 				
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -173,7 +166,6 @@ public class PostsController extends HttpServlet {
 				ControllerUtil.errorMessage(req, "Post '" + p.getContent() + "' não pode ser deletado.");
 			}
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			ControllerUtil.errorMessage(req, e.getMessage());
 		}
@@ -184,12 +176,10 @@ public class PostsController extends HttpServlet {
 		
 		List<Post> posts = null;
 		try {
-			// conta o total, calcula a página atual e busca só os registros dela
 			Pagination pagination = ControllerUtil.createPagination(req, dao.countAll());
 			
 			posts = dao.listPage(pagination.getCurrentPage(), pagination.getPageSize());
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 		

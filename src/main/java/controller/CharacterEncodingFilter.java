@@ -22,11 +22,6 @@ public class CharacterEncodingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         servletRequest.setCharacterEncoding("UTF-8");
-        // Obs.: a linha original servletResponse.setContentType("charset=UTF-8") foi 
-        // removida. "charset=UTF-8" não é um tipo MIME válido: ela sobrescrevia o 
-        // Content-Type de TODA resposta, inclusive css/js, e em versões recentes do 
-        // Tomcat o navegador deixava de aplicar o CSS. Cada JSP já define seu 
-        // contentType (text/html; charset=UTF-8) e o Tomcat define o dos arquivos estáticos.
         servletResponse.setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest, servletResponse);
     }

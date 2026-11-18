@@ -9,13 +9,11 @@
   z-index:999;
 }
 
-/* Tela de login */
 .login-card {
   max-width: 380px;
   margin: 90px auto 0 auto;
 }
 
-/* o .alert global é "absolute"; dentro do login ele deve seguir o fluxo normal */
 .login-card .alert {
   position: static;
   width: auto;

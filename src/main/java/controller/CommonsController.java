@@ -21,7 +21,6 @@ public class CommonsController {
 		try {
 			listUsers = dao.listAll();
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 		
@@ -29,7 +28,6 @@ public class CommonsController {
 			req.setAttribute("users", listUsers);		
 	}
 	
-	// Carrega todas as empresas para preencher o <select> do formulário de vagas
 	public static void listCompanies(HttpServletRequest req) {
 		CompanyDAO dao = DAOFactory.createDAO(CompanyDAO.class);
 		
@@ -37,7 +35,6 @@ public class CommonsController {
 		try {
 			listCompanies = dao.listAll();
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 		
@@ -45,7 +42,6 @@ public class CommonsController {
 			req.setAttribute("companies", listCompanies);		
 	}
 	
-	// Carrega todas as vagas para preencher o <select> do formulário de candidatos
 	public static void listJobs(HttpServletRequest req) {
 		JobDAO dao = DAOFactory.createDAO(JobDAO.class);
 		
@@ -53,7 +49,6 @@ public class CommonsController {
 		try {
 			listJobs = dao.listAll();
 		} catch (ModelException e) {
-			// Log no servidor
 			e.printStackTrace();
 		}
 		

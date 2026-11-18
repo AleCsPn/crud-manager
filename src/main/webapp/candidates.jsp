@@ -91,13 +91,10 @@
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			// fecha o alert após 3 segundos
 			setTimeout(function() {
 				$("#alert").slideUp(500);
 			}, 3000);
 			
-			// ao clicar no excluir de algum candidato, pega o nome e o id 
-			// e a ação (delete) e envia para o modal 
 			$(".modal-remove").click(function () {
 				var candidateName = $(this).attr('candidate-name');
 				var candidateId = $(this).attr('candidate-id');

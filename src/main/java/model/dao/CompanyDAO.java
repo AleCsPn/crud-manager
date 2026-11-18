@@ -11,8 +11,6 @@ public interface CompanyDAO {
 	boolean delete(Company company) throws ModelException;
 	List<Company> listAll() throws ModelException;
 	Company findById(int id) throws ModelException;
-	// Paginação: devolve apenas os registros da página pedida (page começa em 1)
 	List<Company> listPage(int page, int pageSize) throws ModelException;
-	// Total de registros (necessário para calcular quantas páginas existem)
 	int countAll() throws ModelException;
 }

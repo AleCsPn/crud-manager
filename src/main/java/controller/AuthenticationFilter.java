@@ -13,14 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- * Filtro de autenticação: intercepta TODAS as requisições (urlPatterns = "/*") 
- * antes de chegarem aos servlets/JSPs. Se o usuário não estiver logado, ele é 
- * redirecionado para a tela de login.
- * 
- * Só são públicos: a própria tela de login e os arquivos estáticos 
- * (css, js, fonts, images), necessários para a tela de login ser desenhada.
- */
 @WebFilter(urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
 
@@ -43,14 +35,11 @@ public class AuthenticationFilter implements Filter {
 			return;
 		}
 
-		// getSession(false): NÃO cria sessão nova se ela não existir
 		HttpSession session = req.getSession(false);
 		boolean logged = session != null 
 				&& session.getAttribute(LoginController.SESSION_ATTRIBUTE) != null;
 
 		if (logged) {
-			// Depois do logout, o botão "voltar" do navegador não deve 
-			// mostrar páginas protegidas guardadas em cache
 			resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			resp.setHeader("Pragma", "no-cache");
 			resp.setDateHeader("Expires", 0);
@@ -62,9 +51,6 @@ public class AuthenticationFilter implements Filter {
 	}
 
 	private boolean isPublic(HttpServletRequest req) {
-		// getServletPath() já vem normalizado pelo container (sem o contexto 
-		// e sem "../"). Usar getRequestURI() permitiria burlar o filtro com 
-		// algo como /crud-manager/css/../users
 		String path = req.getServletPath();
 
 		if (path.equals("/login"))

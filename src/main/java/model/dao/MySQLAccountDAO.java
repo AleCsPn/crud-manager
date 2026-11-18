@@ -9,8 +9,6 @@ public class MySQLAccountDAO implements AccountDAO {
 	public Account findByEmail(String email) throws ModelException {
 		DBHandler db = new DBHandler();
 
-		// PreparedStatement: o e-mail digitado vai como parâmetro (?) e nunca 
-		// é concatenado na SQL, o que impede SQL Injection no formulário de login
 		String sql = "SELECT id, name, email, password_hash FROM accounts WHERE email = ?";
 
 		db.prepareStatement(sql);

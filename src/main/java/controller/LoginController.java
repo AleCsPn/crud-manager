@@ -19,7 +19,6 @@ public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	// Nome do atributo de sessão que guarda a conta logada (o filtro usa o mesmo nome)
 	public static final String SESSION_ATTRIBUTE = "loggedAccount";
 
 	@Override
@@ -34,7 +33,6 @@ public class LoginController extends HttpServlet {
 			break;
 		}
 		default:
-			// Quem já está logado não precisa ver a tela de login
 			HttpSession session = req.getSession(false);
 			if (session != null && session.getAttribute(SESSION_ATTRIBUTE) != null) {
 				ControllerUtil.redirect(resp, req.getContextPath() + "/posts");
@@ -78,28 +76,19 @@ public class LoginController extends HttpServlet {
 			Account account = dao.findByEmail(email.trim());
 
 			if (account != null && PasswordUtil.verify(password, account.getPasswordHash())) {
-				// Cria a sessão (se ainda não existe) e troca o ID dela logo após 
-				// autenticar. Evita "session fixation": um ID de sessão que o 
-				// atacante conhecia antes do login deixa de valer.
 				req.getSession();
 				req.changeSessionId();
 
-				// O hash da senha não precisa ficar guardado na sessão
 				account.setPasswordHash(null);
 				req.getSession().setAttribute(SESSION_ATTRIBUTE, account);
 
-				// Redirect (e não forward): se o usuário apertar F5, o navegador 
-				// não reenvia o POST de login. Padrão Post/Redirect/Get.
 				ControllerUtil.redirect(resp, req.getContextPath() + "/posts");
 				return;
 			}
 
-			// Mesma mensagem para e-mail inexistente e senha errada: não revela 
-			// quais e-mails estão cadastrados
 			showLoginError(req, resp, email, "E-mail ou senha inválidos.");
 
 		} catch (ModelException e) {
-			// log no servidor
 			e.printStackTrace();
 			showLoginError(req, resp, email, "Não foi possível realizar o login. Tente novamente.");
 		}
@@ -109,7 +98,6 @@ public class LoginController extends HttpServlet {
 			String email, String message) throws ServletException, IOException {
 
 		req.setAttribute("error", message);
-		// devolve o e-mail digitado para o usuário não ter que digitar de novo
 		req.setAttribute("email", email);
 
 		ControllerUtil.forward(req, resp, "/login.jsp");

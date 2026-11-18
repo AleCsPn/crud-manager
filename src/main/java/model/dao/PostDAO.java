@@ -11,8 +11,6 @@ public interface PostDAO {
 	boolean delete(Post post) throws ModelException;
 	List<Post> listAll() throws ModelException;
 	Post findById(int id) throws ModelException;
-	// Paginação: devolve apenas os registros da página pedida (page começa em 1)
 	List<Post> listPage(int page, int pageSize) throws ModelException;
-	// Total de registros (necessário para calcular quantas páginas existem)
 	int countAll() throws ModelException;
 }

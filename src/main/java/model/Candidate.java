@@ -3,9 +3,6 @@ package model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * Candidato a uma vaga. Cada candidato está vinculado à vaga desejada (Job).
- */
 public class Candidate {
 	private int id;
 	private String fullName;
